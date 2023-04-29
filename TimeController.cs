@@ -45,14 +45,6 @@ namespace JDFixer
 
         private void Update()
         {
-            if (earthday && text_shown == false && audioTime.songTime >= 2)
-            {
-                text.gameObject.SetActive(true);
-                tween.AddTween(new FloatTween(0, 1, value => text.alpha = value, 3.5f, EaseType.InCubic), text);
-                text_shown = true;
-                return;
-            }
-
             if (text_shown == false && audioTime.songTime >= 0.25 * length)
             {
                 text.gameObject.SetActive(true);
@@ -64,37 +56,6 @@ namespace JDFixer
                 //text.CrossFadeAlpha(0f, -3.5f, false); // This doesnt work
                 tween.AddTween(new FloatTween(1, 0, value => text.alpha = value, 3.5f, EaseType.InCubic), text);
             }
-        }
-
-        private static TextMeshProUGUI CreateText(Canvas canvas, Vector2 position)
-        {
-            GameObject gameObject = new GameObject("CustomUIText");
-            gameObject.SetActive(false);
-            TextMeshProUGUI tmp = gameObject.AddComponent<TextMeshProUGUI>();
-
-            tmp.rectTransform.SetParent(canvas.transform, false);
-            tmp.rectTransform.transform.localPosition = Vector3.zero;
-            tmp.rectTransform.anchoredPosition = position;
-
-            if (DateTime.Compare(DateTime.Now, new DateTime(DateTime.Now.Year, 4, 22)) >= 0 && DateTime.Compare(DateTime.Now, new DateTime(DateTime.Now.Year, 4, 23)) < 1)
-            {
-                earthday = true;
-                tmp.text = "Hello there.\nMaking mods is hard work. If JDFixer has helped you,\nI ask one favor in return.\n <#ffff00>Today is Earth Day. We are in a climate emergency.\nI ask you to do anything and everything you can to preserve our and your future.\nWe CAN do this together.";
-            }
-            else if (DateTime.Compare(DateTime.Now, new DateTime(DateTime.Now.Year, 4, 1)) >= 0 && DateTime.Compare(DateTime.Now, new DateTime(DateTime.Now.Year, 4, 2)) < 1)
-            {
-                tmp.text = "Hello, Happy April Fools and have fun with this new game mode!\nHint - If you want out, you may turn it off in the config ^^";
-            }
-            else
-            {
-                tmp.text = "";
-            }
-            tmp.fontSize = 0.12f;
-            tmp.color = new Color(1f, 0f, 0.5f);
-            tmp.alpha = 0f;
-            tmp.alignment = TextAlignmentOptions.Center;
-
-            return tmp;
         }
     }
 }
